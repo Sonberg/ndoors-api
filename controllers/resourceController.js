@@ -1,4 +1,4 @@
-const firestore = require('./../config/index');
+const firestore = require('../config/firebase');
 
 module.exports = (collection) => {
     return {

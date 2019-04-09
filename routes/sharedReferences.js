@@ -1,5 +1,5 @@
 const routes = require('express').Router();
-const firestore = require('./../config/index');
+const firestore = require('./../config/firebase');
 const referenceLinksDb = firestore.collection('References')
 
 routes.get('/:id', async (req, res) => {
