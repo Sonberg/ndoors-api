@@ -1,4 +1,6 @@
 const firestore = require('../config/firebase');
+const _ = require('lodash');
+
 
 module.exports = (collection) => {
     return {
@@ -21,6 +23,10 @@ module.exports = (collection) => {
             const snap = await firestore.collection(collection).doc(req.params.id).get();
             const data = snap.data();
 
+            if (!data) {
+                return res.status(404).send();
+            }
+
             res.json({
                 id: snap.id,
                 ...data
@@ -39,13 +45,7 @@ module.exports = (collection) => {
             res.status(200).send();
         },
         patch: async (req, res) => {
-            const snap = firestore.collection(collection).doc(req.params.id).get();
-            const data = {
-                ...snap.data(),
-                ...req.body
-            }
-
-            firestore.collection(collection).doc(req.params.id).set(data);
+            await firestore.collection(collection).doc(req.params.id).update(req.body);
             res.status(200).send();
         },
         delete: async (req, res) => {
