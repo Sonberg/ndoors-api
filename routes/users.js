@@ -1,4 +1,4 @@
-const firestore = require("./../config/firebase");
+const firestore = require("./../services/firebase");
 const routes = require('express').Router();
 const validate = require('../middleware/validate');
 const collection = 'Users';

@@ -1,4 +1,4 @@
-const firestore = require('../config/firebase');
+const firestore = require('../services/firebase');
 const _ = require('lodash');
 
 
