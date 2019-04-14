@@ -1,5 +1,5 @@
 const routes = require('express').Router()
-const loadCsv = require('../csv-provider')
+const loadCsv = require('../services/csv')
 
 let skills = []
 let abilities = []
