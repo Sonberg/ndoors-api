@@ -1,6 +1,7 @@
-const firestore = require('../services/firebase');
+const firebase = require('../services/firebase');
 const _ = require('lodash');
 
+const firestore = firebase.firestore;
 
 module.exports = (collection) => {
     return {
@@ -20,36 +21,27 @@ module.exports = (collection) => {
             res.json(data);
         },
         get: async (req, res) => {
-            const snap = await firestore.collection(collection).doc(req.params.id).get();
-            const data = snap.data();
+            const data = await firebase.get(collection, req.params.id);
 
             if (!data) {
                 return res.status(404).send();
             }
-
-            res.json({
-                id: snap.id,
-                ...data
-            });
+            res.json(data);
         },
         post: async (req, res) => {
-            const snap = await firestore.collection(collection).add(req.body);
-
-            res.json({
-                id: snap.id,
-                ...req.body
-            });
+            const data = await firebase.post(collection, req.body);
+            res.json(data);
         },
         put: async (req, res) => {
-            await firestore.collection(collection).doc(req.params.id).set(req.body);
+            await firebase.put(collection, req.params.id, req.body);
             res.status(200).send();
         },
         patch: async (req, res) => {
-            await firestore.collection(collection).doc(req.params.id).update(req.body);
+            await firebase.patch(collection, req.params.id, req.body);
             res.status(200).send();
         },
         delete: async (req, res) => {
-            await firestore.collection(collection).doc(req.params.id).delete();
+            await firebase.remove(collection, req.params.id);
             res.status(200).send();
         }
     }
