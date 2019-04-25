@@ -1,20 +1,25 @@
 const Strategy = require('passport-facebook').Strategy
 const passport = require('passport')
 const firebase = require('./../../services/firebase')
+const config = require('./../../config')
 
-const FACEBOOK_APP_ID = '1108539459333624'
-const FACEBOOK_APP_SECRET = 'ba7b8485b048cfb7d9a8e6207cb928f3'
 
 const handle = async (accessToken, refreshToken, profile, cb) => {
 
     for (const email of profile.emails) {
         const user = await firebase.user(email.value)
 
+        // User not found
         if (!user) {
             continue;
         }
 
-        firebase.patch(firebase.collections.users, user.id, {
+        // User found and have facebook id saved
+        if (user.facebookId === profile.id) {
+            return cb(null, user);
+        }
+
+        firebase.patch(firebase.collections.users, email.value, {
             facebookId: profile.id
         });
 
@@ -34,8 +39,8 @@ const handle = async (accessToken, refreshToken, profile, cb) => {
 };
 
 const strategy = new Strategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
+    clientID: config.FACEBOOK_APP_ID,
+    clientSecret: config.FACEBOOK_APP_SECRET,
     callbackURL: "http://localhost:3001/api/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'photos', 'email']
 }, handle)

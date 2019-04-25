@@ -27,14 +27,6 @@ const strategy = new LocalStrategy({
 
 module.exports = {
     strategy,
-    authenticate: req => new Promise((resolve, reject) => {
-        passport.authenticate('local', {
-            session: false
-        }, (error, user, info) => {
-            if (error || !user) {
-                return reject(err);
-            }
-            resolve(user);
-        })(req)
+    authenticate: passport.authenticate('local', {
     })
-};
+}

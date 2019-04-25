@@ -1,12 +1,14 @@
 const routes = require('express').Router();
-const Jwt = require('./../authentication/strategies/jwt');
+const passport = require('passport');
+
+const isAuthenticated = (req, res, next) => req.user && next() || res.status(401).send();
 
 // Routes
-routes.use('/api/references/', Jwt.authenticate, require('./references'));
-routes.use('/api/users/', Jwt.authenticate, require('./users'));
-routes.use('/api/skills/', Jwt.authenticate, require('./skills'));
-routes.use('/api/csv/', Jwt.authenticate, require('./csv'));
-routes.use('/api/sms/', Jwt.authenticate, require('./sms'));
+routes.use('/api/references/', isAuthenticated, require('./references'));
+routes.use('/api/users/', isAuthenticated, require('./users'));
+routes.use('/api/skills/', isAuthenticated, require('./skills'));
+routes.use('/api/csv/', isAuthenticated, require('./csv'));
+routes.use('/api/sms/', isAuthenticated, require('./sms'));
 
 // Authenticate
 routes.use('/api/auth/', require('./auth'));
