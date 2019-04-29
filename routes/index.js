@@ -1,7 +1,9 @@
 const routes = require('express').Router();
-const passport = require('passport');
+const passport = require('passport')
 
-const isAuthenticated = (req, res, next) => req.user && next() || res.status(401).send();
+const isAuthenticated = (req, res, next) => {
+    return req.isAuthenticated() ? next() : res.status(401).send();
+};
 
 // Routes
 routes.use('/api/references/', isAuthenticated, require('./references'));

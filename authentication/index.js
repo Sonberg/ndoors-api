@@ -26,6 +26,6 @@ module.exports = {
         passport.use(local.strategy)
 
         app.use(passport.initialize());
-        app.use(passport.session());
+        app.use(passport.authenticate('session'));
     }
 }

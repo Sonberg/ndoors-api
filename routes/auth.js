@@ -12,6 +12,13 @@ const saveSocketIdToSession = (req, res, next) => {
     next()
 }
 
+routes.get(
+    '/authenticated',
+    (req, res) => res.json({
+        isAuthenticated: req.isAuthenticated()
+    }));
+
+
 // Facebook
 routes.get(
     '/facebook',
@@ -40,14 +47,5 @@ routes.post(
     '/login',
     Authentication.local.authenticate,
     async (req, res) => res.json(await Authentication.login(req)));
-
-// Refresh bearer token
-routes.post(
-    '/token',
-    (req, res) => Authentication
-    .refresh(req.body.refreshToken)
-    .then(x => res.json(x))
-    .catch(err => res.json(err)));
-
 
 module.exports = routes;

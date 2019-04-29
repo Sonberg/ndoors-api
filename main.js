@@ -16,22 +16,30 @@ const server = require('http').Server(app);
 const port = process.env.PORT || 3001;
 const io = socketIo(server)
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000'
+}));
+
 app.use(cookieParser());
 app.use(session({
   store: new fileStore(),
   secret: 'dcad6f9d-5493-4675-957c-828aae0b67af',
   saveUninitialized: true,
-  resave: false
+  cookie: {
+    maxAge: 3600000 * 24 * 2 // 2 days
+  },
+  resave: false,
 }));
 
 // Allow headers
-app.use(function (_, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// app.use((_, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Methods', '*');
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
 // Socket
 app.set('io', io)
