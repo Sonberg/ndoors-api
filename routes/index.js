@@ -14,5 +14,6 @@ routes.use('/api/sms/', isAuthenticated, require('./sms'));
 
 // Authenticate
 routes.use('/api/auth/', require('./auth'));
+routes.use('/config', (req, res) => res.json(process.env));
 
 module.exports = routes;
