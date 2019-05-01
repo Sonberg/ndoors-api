@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const session = require('express-session');
-const fileStore = require('session-file-store')(session);
+const redisStore = require('connect-redis')(session);
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan')
@@ -23,23 +23,14 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(session({
-  store: new fileStore(),
+  store: new redisStore(),
   secret: 'dcad6f9d-5493-4675-957c-828aae0b67af',
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     maxAge: 3600000 * 24 * 2 // 2 days
   },
   resave: false,
 }));
-
-// Allow headers
-// app.use((_, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', '*');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   next();
-// });
 
 // Socket
 app.set('io', io)
@@ -59,4 +50,4 @@ app.use(bodyParser.urlencoded({
 // Routes
 app.use('/', routes);
 
-server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+server.listen(port, () => console.log(`App listening on port ${port}!`))

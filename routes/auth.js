@@ -30,7 +30,16 @@ routes.get(
     Authentication.facebook.authenticate,
     (req, res) => {
         req.session.socketId && req.app.get('io').in(req.session.socketId).emit('facebook', req.user)
-        res.status(200).send(req.session.socketId)
+        res.status(200).send()
+    });
+
+// Logout
+routes.post(
+    '/logout',
+    async (req, res) => {
+        req.session.destroy((err) => {
+            res.send(err);
+        });
     });
 
 // Sign up with password
