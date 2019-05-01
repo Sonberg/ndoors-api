@@ -27,10 +27,10 @@ app.use(session({
   secret: 'dcad6f9d-5493-4675-957c-828aae0b67af',
   saveUninitialized: false,
   cookie: {
-    maxAge: 3600000 * 24 * 2 // 2 days
+    maxAge: 3600000 * 24 * 2, // 2 days
+    secure: process.env.NODE_ENV === 'production'
   },
-  resave: false,
-  secure: process.env.NODE_ENV === 'production'
+  resave: false
 }));
 
 // Socket
