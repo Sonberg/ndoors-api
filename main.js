@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(session({
   store: new redisStore(),
   secret: 'dcad6f9d-5493-4675-957c-828aae0b67af',
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     maxAge: 3600000 * 24 * 2 // 2 days
   },
