@@ -41,7 +41,7 @@ const handle = async (accessToken, refreshToken, profile, cb) => {
 const strategy = new Strategy({
     clientID: config.FACEBOOK_APP_ID,
     clientSecret: config.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3001/api/auth/facebook/callback",
+    callbackURL: "/api/auth/facebook/callback",
     profileFields: ['id', 'displayName', 'photos', 'email']
 }, handle)
 
