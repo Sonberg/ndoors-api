@@ -9,6 +9,7 @@ const morgan = require('morgan')
 const routes = require('./routes')
 const cors = require('cors')
 const socketIo = require('socket.io')
+const config = require('./config')
 
 const app = express()
 const server = require('http').Server(app);
@@ -23,7 +24,9 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(session({
-  store: new redisStore(),
+  store: new redisStore({
+    url: config.REDIS_URL
+  }),
   secret: 'dcad6f9d-5493-4675-957c-828aae0b67af',
   saveUninitialized: false,
   cookie: {

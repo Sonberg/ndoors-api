@@ -7,6 +7,7 @@ const config = {
             username,
             password
         }
-    })
+    }),
+    REDIS_URL: process.env.REDIS_URL
 }
 module.exports = config
