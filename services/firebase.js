@@ -58,11 +58,7 @@ const patch = (collection, id, body) => firestore.collection(collection).doc(id)
 const remove = (collection, id) => firestore.collection(collection).doc(id).delete();
 
 const user = async email => {
-  const data = await all(collections.users, [
-    ['email', '==', email]
-  ]);
-
-  return data.find(x => true);
+  return await get(collections.users, email);
 };
 
 module.exports = {
