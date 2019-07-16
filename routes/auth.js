@@ -15,7 +15,8 @@ const saveSocketIdToSession = (req, res, next) => {
 routes.get(
     '/authenticated',
     (req, res) => res.json({
-        isAuthenticated: req.isAuthenticated()
+        isAuthenticated: req.isAuthenticated(),
+        expires: req.isAuthenticated() && req.session && req.session.cookie ? req.session.cookie.expires : null
     }));
 
 
@@ -47,7 +48,8 @@ routes.post(
     '/signup',
     async (req, res) => {
         const body = req.body;
-        const password = Authentication.password.generate(body.password);
+        const email = body.email;
+        const password = Authentication.password(body.password);
         res.send(password);
     });
 
