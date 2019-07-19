@@ -15,10 +15,11 @@ const saveSocketIdToSession = (req, res, next) => {
 routes.get(
     '/authenticated',
     (req, res) => {
-        
+
         res.json({
             isAuthenticated: req.isAuthenticated(),
-            expires: req.isAuthenticated() && req.session && req.session.cookie ? req.session.cookie.expires : null
+            expires: req.isAuthenticated() && req.session && req.session.cookie ? req.session.cookie.expires : null,
+            user: req.user
         })
     });
 
