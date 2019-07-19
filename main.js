@@ -14,7 +14,7 @@ const config = require('./config')
 const app = express()
 const server = require('http').Server(app);
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3003;
 const io = socketIo(server)
 
 app.use(cors({

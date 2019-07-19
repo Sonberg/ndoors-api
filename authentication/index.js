@@ -9,7 +9,9 @@ const facebook = require('./strategies/facebook')
 const local = require('./strategies/local')
 
 const login = req => new Promise(async (resolve, _) => resolve({
-    user: req.user
+    user: req.user,
+    isAuthenticated: req.isAuthenticated(),
+    expires: req.isAuthenticated() && req.session && req.session.cookie ? req.session.cookie.expires : null
 }));
 
 
