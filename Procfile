@@ -1,1 +1,1 @@
-web: node run start
+web: node ./src/index.ts

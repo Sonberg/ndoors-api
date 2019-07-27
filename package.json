@@ -46,7 +46,7 @@
 		"typescript": "^3.5.3"
 	},
 	"engines": {
-		"node": "8.11.4"
+		"node": "9.3.0"
 	},
 	"nodemonConfig": {
 		"ignore": [ "**/*.test.ts", "**/*.spec.ts", ".git", "node_modules" ],
