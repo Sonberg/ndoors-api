@@ -25,4 +25,4 @@ export const strategy = new LocalStrategy({
     passwordField: 'password'
 }, handle);
 
-export const authenticate = () => passport.authenticate('local', {});
+export const authenticate = passport.authenticate('local', {});

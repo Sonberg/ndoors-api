@@ -49,7 +49,7 @@ routes.post(
 		const { name, email, password } = req.body;
 		const hashedPassword = Password(password);
 
-		const user = await Firebase.post(Firebase.collections.users, { name, email, password: hashedPassword });
+		await Firebase.post(Firebase.collections.users, { name, email, password: hashedPassword });
 
 		next();
 	},
