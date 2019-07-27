@@ -2,7 +2,7 @@
 	"name": "ndoors-backend",
 	"version": "1.0.0",
 	"description": "",
-	"main": "main.js",
+	"main": "./build/index.js",
 	"scripts": {
 		"start": "node --inspect=5858 -r ts-node/register ./src/index.ts",
 		"start:watch": "nodemon",
@@ -45,15 +45,8 @@
 		"typescript": "^3.5.3"
 	},
 	"nodemonConfig": {
-		"ignore": [
-			"**/*.test.ts",
-			"**/*.spec.ts",
-			".git",
-			"node_modules"
-		],
-		"watch": [
-			"src"
-		],
+		"ignore": [ "**/*.test.ts", "**/*.spec.ts", ".git", "node_modules" ],
+		"watch": [ "src" ],
 		"exec": "npm start",
 		"ext": "ts"
 	}
