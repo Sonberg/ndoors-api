@@ -21,6 +21,7 @@ const firestore = firebase.firestore();
 
 // ALL
 const all = async (collection, query) => {
+
   let reference = firestore.collection(collection);
 
   for (const x of query) {
@@ -28,14 +29,21 @@ const all = async (collection, query) => {
   }
 
   const snap = await reference.get();
-  return snap.docs.map(x => x.data());
+
+  return snap.docs.map(x => ({
+    id: x.id,
+    ...x.data()
+  }));
 }
 
 // GET
 const get = async (collection, id) => {
   const reference = firestore.collection(collection).doc(id);
   const snap = await reference.get();
-  return snap.data();
+  return {
+    id: x.id,
+    ...snap.data()
+  };
 }
 
 // POST
@@ -58,10 +66,11 @@ const patch = (collection, id, body) => firestore.collection(collection).doc(id)
 const remove = (collection, id) => firestore.collection(collection).doc(id).delete();
 
 const user = async email => {
-  return await get(collections.users, email);
+  const users = await all(collections.users, [['email', '==', email]]);
+  return users.length ? users[0] : null;
 };
 
-module.exports = {
+export default {
   collections,
   firestore,
   user,

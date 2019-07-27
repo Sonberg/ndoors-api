@@ -1,32 +1,28 @@
-const firebase = require('./../../services/firebase')
+import Firebase from '../../services/firebase'
 const passport = require('passport')
 const bcrypt = require('bcrypt')
 const LocalStrategy = require('passport-local').Strategy
 
 const handle = async (email, password, done) => {
-    const user = await firebase.user(email);
+    const user = await Firebase.user(email);
 
     if (!user) {
-        return done(null, false);
+        return done({ errors: [{ param: 'password', msg: 'Email or password incorrect' }] });
     }
 
     const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
-        return done(true);
+        return done({ errors: [{ param: 'password', msg: 'Email or password incorrect' }] });
     }
 
     return done(null, user);
 
 };
 
-const strategy = new LocalStrategy({
+export const strategy = new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password'
 }, handle);
 
-module.exports = {
-    strategy,
-    authenticate: passport.authenticate('local', {
-    })
-}
+export const authenticate = () => passport.authenticate('local', {});

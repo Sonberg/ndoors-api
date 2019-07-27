@@ -1,13 +1,13 @@
-const Strategy = require('passport-facebook').Strategy
-const passport = require('passport')
-const firebase = require('./../../services/firebase')
-const config = require('./../../config')
+import { Strategy } from 'passport-facebook';
+import * as  passport from 'passport'
+import Firebase from '../../services/firebase'
+import config from '../../config';
 
 
 const handle = async (accessToken, refreshToken, profile, cb) => {
 
     for (const email of profile.emails) {
-        const user = await firebase.user(email.value)
+        const user = await Firebase.user(email.value)
 
         // User not found
         if (!user) {
@@ -28,7 +28,7 @@ const handle = async (accessToken, refreshToken, profile, cb) => {
         image: profile.photos && profile.photos[0] && profile.photos[0].value
     }
     console.log(user, profile)
-    await firebase.put(firebase.collections.users, user.email, user);
+    await Firebase.put(Firebase.collections.users, user.email, user);
 
     return cb(null, user);
 };
@@ -38,7 +38,7 @@ const setFacebookIdIfNeeded = (user, profile) => {
         return
     }
 
-    firebase.patch(firebase.collections.users, email.value, {
+    Firebase.patch(Firebase.collections.users, email.value, {
         facebookId: profile.id
     });
 }
@@ -53,7 +53,7 @@ const setImageIfNeeded = (user, profile) => {
         return
     }
 
-    firebase.patch(firebase.collections.users, user.email, {
+    Firebase.patch(Firebase.collections.users, user.email, {
         image
     });
 }
