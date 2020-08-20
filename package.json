@@ -17,7 +17,7 @@
 		"@types/passport": "^1.0.0",
 		"awesome-typescript-loader": "^5.2.1",
 		"base-64": "^0.1.0",
-		"bcrypt": "^3.0.6",
+		"bcrypt": "^5.0.0",
 		"body-parser": "^1.18.3",
 		"connect-redis": "^3.4.1",
 		"cookie-parser": "^1.4.4",
